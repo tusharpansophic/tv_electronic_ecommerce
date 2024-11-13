@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Razorpay Payment</title>
+</head>
+<body>
+  <h1>Processing Payment...</h1>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script>
+    // Configuration for Razorpay checkout
+    var options = {
+      "key": "{{ razorpay_merchant_key }}", // Razorpay API key
+      "amount": "{{ amount }}", // Amount in paise
+      "currency": "{{ currency }}",
+      "name": "Electronic",
+      "description": "Payment",
+      "order_id": "{{ razorpay_order_id }}", // Order ID from the backend
+      "handler": function (response) {
+        // Submit form data to the payment handler view after successful payment
+        var form = document.createElement('form');
+        form.method = 'POST';
+        form.action = "{{ callback_url }}";
+
+        // CSRF token
+        var csrfInput = document.createElement('input');
+        csrfInput.type = 'hidden';
+        csrfInput.name = 'csrfmiddlewaretoken';
+        csrfInput.value = '{{ csrf_token }}';
+        form.appendChild(csrfInput);
+
+        // Append Razorpay payment details
+        form.innerHTML += '<input type="hidden" name="razorpay_payment_id" value="' + response.razorpay_payment_id + '">';
+        form.innerHTML += '<input type="hidden" name="razorpay_order_id" value="' + response.razorpay_order_id + '">';
+        form.innerHTML += '<input type="hidden" name="razorpay_signature" value="' + response.razorpay_signature + '">';
+
+        document.body.appendChild(form);
+        form.submit();
+      }
+    };
+
+    // Open Razorpay modal on page load
+    window.onload = function() {
+      var rzp1 = new Razorpay(options);
+      rzp1.open();
+    };
+  </script>
+</body>
+</html>

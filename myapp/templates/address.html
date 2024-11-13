@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block base %}
+
+<div class="page-head_agile_info_w3l"></div>
+
+<div class="services-breadcrumb">
+    <div class="agile_inner_breadcrumb">
+        <div class="container">
+            <ul class="w3_short">
+                <li>
+                    <a href="{% url 'index' %}">Home</a>
+                    <i>|</i>
+                </li>
+                <li>Add Address</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="privacy py-sm-5 py-4">
+    <div class="container py-xl-4 py-lg-2">
+        <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
+            <span>A</span>dd Address
+        </h3>
+        <div class="address_form_agile">
+            <h4 class="mb-sm-4 mb-3">Enter Address Details</h4>
+            <form action="/address/" method="POST" class="creditly-card-form agileinfo_form">
+                {% csrf_token %}
+                <div class="creditly-wrapper wthree, w3_agileits_wrapper">
+                    <div class="information-wrapper">
+                        <div class="first-row">
+                            <div class="controls form-group">
+                                <input class="billing-address-name form-control" type="text" name="name" placeholder="Full Name" required="">
+                            </div>
+                            <div class="w3_agileits_card_number_grids">
+                                <div class="w3_agileits_card_number_grid_left form-group">
+                                    <div class="controls">
+                                        <input type="Number" class="form-control" placeholder="Mobile Number" name="mobile" required="">
+                                    </div>
+                                </div>
+                                <div class="w3_agileits_card_number_grid_right form-group">
+                                    <div class="controls">
+                                        <input type="text" class="form-control" placeholder="Landmark" name="landmark" required="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="controls form-group">
+                                <input type="text" class="form-control" placeholder="Town/City" name="city" required="">
+                            </div>
+                        </div>
+                        <button class="submit check_out btn btn-info mt-4">Save Address</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

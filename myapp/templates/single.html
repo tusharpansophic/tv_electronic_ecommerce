@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block base %}
+
+<!-- banner-2 -->
+<div class="page-head_agile_info_w3l"></div>
+
+<!-- page -->
+<div class="services-breadcrumb">
+    <div class="agile_inner_breadcrumb">
+        <div class="container">
+            <ul class="w3_short">
+                <li>
+                    <a href="{% url 'index' %}">Home</a>
+                    <i>|</i>
+                </li>
+                <li>Single Product</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Single Page -->
+<div class="banner-bootom-w3-agileits py-5">
+    <div class="container py-xl-4 py-lg-2">
+        <!-- tittle heading -->
+        <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
+            <span>S</span>ingle
+            <span>P</span>age
+        </h3>
+        <!-- //tittle heading -->
+
+        <div class="row">
+           <div class="col-lg-5 col-md-8 single-right-left">
+    <div class="grid images_3_of_2">
+        <div class="flexslider">
+            <ul class="slides">
+                <li data-thumb="{{ sp.pro_images.url }}">
+                    <div class="thumb-image">
+                        <!-- Update the class to apply the CSS for smaller size -->
+                        <img src="{{ sp.pro_images.url }}" data-imagezoom="true" class="img-fluid small-img" alt="">
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+            <div class="col-lg-7 single-right-left simpleCart_shelfItem">
+                <h3 class="mb-3">{{ sp.pro_titel }}</h3>
+                <p class="mb-3">
+                    <span class="item_price">{{ sp.pro_price }}</span>
+                    <del class="mx-2 font-weight-light">{{ sp.discounted_price }}</del>
+                    <span style="color: #6f85c1; font-weight: bold; margin-right: 10px;">Discount {{ sp.discount_percentage|floatformat:0 }}%</span>
+                    <label>Free delivery</label>
+                </p>
+                <div class="single-infoagile">
+                    <ul>
+                        <li class="mb-3">Cash on Delivery Eligible.</li>
+                        <li class="mb-3">Shipping Speed to Delivery.</li>
+                        <li class="mb-3">EMIs from $655/month.</li>
+                        <li class="mb-3">Bank OfferExtra 5% off* with Axis Bank Buzz Credit CardT&C</li>
+                    </ul>
+                </div>
+                <div class="product-single-w3l">
+                    <p class="my-3"><i class="far fa-hand-point-right mr-2"></i><label>1 Year</label> Manufacturer Warranty</p>
+                    <p class="my-3">{{ sp.pro_description }}</p>
+                    <p class="my-sm-4 my-3"><i class="fas fa-retweet mr-3"></i>Net banking & Credit/ Debit/ ATM card</p>
+                </div>
+                <div class="occasion-cart">
+                    <div class="snipcart-details top_brand_home_details single-item hvr-outline-out">
+                        <a href="{% url 'add_to_cart' sp.id %}" class="btn btn-primary">Add To Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Products Section -->
+        <div class="related-products mt-5">
+            <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3"><span>R</span>elated <span>P</span>roducts</h3>
+            <div class="related-products-slider">
+                {% for product in related_products %}
+                <div class="product-card">
+                    <div class="card">
+                        <img src="{{ product.pro_images.url }}" class="card-img-top" alt="{{ product.pro_titel }}">
+                        <div class="card-body text-center">
+                            <a href="{% url 'single' %}?cid={{product.id}}" class="link-product-add-cart">Quick View</a>
+                            <h5 class="card-title">{{ product.pro_titel }}</h5>
+                            <p class="card-text">{{ product.pro_price }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <!-- End Related Products Section -->
+    </div>
+</div>
+<!-- Include Slick Carousel CSS and JS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+<!-- Initialize Slick Carousel -->
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.related-products-slider').slick({
+            slidesToShow: 4,
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 3000,
+            arrows: true,
+            dots: false,
+            responsive: [
+                {
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 1,
+                        infinite: true,
+                        dots: true
+                    }
+                },
+                {
+                    breakpoint: 768,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 1
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                    }
+                }
+            ]
+        });
+    });
+</script>
+
+<!-- Custom CSS for Styling -->
+<style>
+    .related-products-slider .product-card {
+        padding: 15px;
+    }
+    .product-card .card {
+        border: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+    .product-card .card-img-top {
+        width: 100%;
+        height: 200px; /* Set a fixed height */
+        object-fit: contain; /* Ensures the image is fully visible without cropping */
+        border-radius: 5px; /* Optional: adds rounded corners */
+        background-color: #f8f8f8; /* Optional: adds background color to fill empty space */
+    }
+    .product-card .card-body {
+        padding: 10px;
+    }
+    .card-body .card-title {
+        font-size: 1rem;
+        font-weight: bold;
+    }
+    .card-body .card-text {
+        font-size: 0.9rem;
+        color: #555;
+    }
+    .related-products .slick-prev:before, .related-products .slick-next:before {
+        color: #007bff;
+    }
+
+    /* Class to control the size of the image */
+.small-img {
+    max-width: 400px; /* Set the maximum width for the image */
+    max-height: 400px; /* Set the maximum height for the image */
+    object-fit: cover; /* Maintain aspect ratio */
+    margin: 0 auto; /* Center the image */
+    display: block; /* Ensure proper alignment */
+}
+</style>
+
+{% endblock %}

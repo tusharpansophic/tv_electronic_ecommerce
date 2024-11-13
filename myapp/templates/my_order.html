@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block base %}
+
+<head>
+    <style>
+        .table-content {
+            margin-top: 20px;
+        }
+
+        .table-bordered {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table-bordered th,
+        .table-bordered td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #f9f9f9;
+        }
+
+        .buttons-carts a {
+            padding: 10px 20px;
+            background-color: #ff4c4c;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .buttons-carts a:hover {
+            background-color: #ff6666;
+        }
+    </style>
+</head>
+
+<div class="cart_main_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <form action="/my_order/">
+                    <div class="table-content table-responsive">
+                        <table class="table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Order Date</th>
+                                    <th>Total</th>
+                                    <th>Shopping Address</th>
+                                    <th>Order Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in my_order %}
+                                    <tr>
+                                        <td>{{ i.order_date }}</td>
+                                        <td>{{ i.product }}</td>
+                                        <td>{{ i.address.city }}</td>
+                                        <td>
+                                            <strong style="
+                                                {% if i.order == 'DELIVERED' %}
+                                                    color: green;
+                                                {% elif i.order == 'Pending' %}
+                                                    color: orange;
+                                                {% else %}
+                                                    color: red;
+                                                {% endif %}
+                                            ">
+                                                {{ i.order }}
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-7 col-sm-7 col-md-7">
+                            <div class="buttons-carts">
+                                <a href="/">Continue Shopping</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
